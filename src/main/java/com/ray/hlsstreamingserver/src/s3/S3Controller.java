@@ -2,6 +2,7 @@ package com.ray.hlsstreamingserver.src.s3;
 
 
 import com.ray.hlsstreamingserver.src.s3.model.FileDetail;
+import com.ray.hlsstreamingserver.src.s3.model.GetPresignedUrlRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,14 @@ public class S3Controller {
         log.info("fileName = {}", fileName);
         return s3Service.getObject(fileName);
     }
+
+    /**
+     * presigned url 발급
+     */
+    @GetMapping("/getPresignedUrl")
+    public ResponseEntity<GetPresignedUrlRes> getPresignedUrl(@RequestParam String fileName) {
+        log.info("url");
+        return ResponseEntity.ok(s3Service.getPresignedUrl(fileName));
+    }
+
 }
