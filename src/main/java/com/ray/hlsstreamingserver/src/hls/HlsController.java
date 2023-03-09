@@ -44,6 +44,20 @@ public class HlsController {
     @Value("${ffmpeg.upload.path}")
     private String UPLOAD_DIR;
 
+    @GetMapping("/upload")
+    public String videoUpload(){
+        return "hls/uploadVideo";
+    }
+
+    @GetMapping("/hls")
+    public String videoHls(Model model) {
+        log.debug("************** class = {}, function = {}", this.getClass().getName(), new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        model.addAttribute("videoUrl", "/templates/hls/video/video.m3u8");
+        return "hls/hls";
+    }
+
+
     @GetMapping("/hls-make/{fileName}")
     @ResponseBody
     public void videoHlsMake(@PathVariable String fileName, Model model) throws IOException {
@@ -104,7 +118,7 @@ public class HlsController {
                 .addExtraArgs("-b:a","128k")
                 .addExtraArgs("-ac","1")
                 .addExtraArgs("-ar","44100")
-                .addExtraArgs("-f","hls")
+                .addExtraArgs("-f", "templates/hls")
                 .addExtraArgs("-hls_time", "4" )
                 .addExtraArgs("-hls_playlist_type","vod")
                 .addExtraArgs("-master_pl_name", ONLY_FILENAME + ".m3u8");
@@ -135,21 +149,12 @@ public class HlsController {
         model.addAttribute("result", "OK");
     }
 
-
-    @GetMapping("/hls")
-    public String videoHls(Model model) {
-        log.debug("************** class = {}, function = {}", this.getClass().getName(), new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        model.addAttribute("videoUrl", "/hls/video/video.m3u8");
-        return "hls/hls";
-    }
-
     @GetMapping("/hls/{fileName}")
     public String videoHlsByFilename(@PathVariable String fileName,
                                      Model model) {
         log.debug("************** class = {}, function = {}", this.getClass().getName(), new Object() {
         }.getClass().getEnclosingMethod().getName());
-        model.addAttribute("videoUrl", "/hls/"+fileName+"/"+fileName+".m3u8");
+        model.addAttribute("videoUrl", "/templates/hls/" +fileName+"/"+fileName+".m3u8");
         return "hls/hls";
     }
 
