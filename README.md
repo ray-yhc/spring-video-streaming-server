@@ -1,5 +1,5 @@
 # HLS 동영상 스트리밍 서비스
-## 트랜스코딩 서버
+## 스트리밍 서버
 
 ![](https://velog.velcdn.com/images/raycho521/post/a699b887-5ad8-4d1b-a812-3a1d7839c114/image.png)
 
